@@ -39,3 +39,14 @@ scaling = 4,
 elements.push(drawings[0])
 resizeCanvas()
 window.addEventListener('resize', resizeCanvas)
+
+canvas.addEventListener('click', () => {
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'canvas_drawing.png'
+    a.click()
+    URL.revokeObjectURL(url)
+  }, 'image/png')
+})

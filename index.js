@@ -40,13 +40,14 @@ elements.push(drawings[0])
 resizeCanvas()
 window.addEventListener('resize', resizeCanvas)
 
+window.addEventListener('resize', resizeCanvas)
+
 canvas.addEventListener('click', () => {
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'canvas_drawing.png'
-    a.click()
-    URL.revokeObjectURL(url)
-  }, 'image/png')
+  const dataURL = canvas.toDataURL('image/png')
+  const a = document.createElement('a')
+  a.href = dataURL
+  a.download = 'canvas_drawing.png'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
 })

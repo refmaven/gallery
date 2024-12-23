@@ -20,6 +20,8 @@ scaling = 4,
       let rotation = 0
       let starting = 0
       let spacing =1/3*squareSize
+      ctx.fillStyle = 'white'
+      ctx.fillRect(0,0,canvas.width,canvas.height)
       for(let x = starting; x < canvas.width; x+=spacing){
         for(let y = starting; y < canvas.height; y+=spacing){
           ctx.save()

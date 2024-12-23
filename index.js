@@ -1,29 +1,32 @@
 let canvas = document.querySelector('#c'),
-scaling = 4,
   ctx = canvas.getContext('2d'),
   elements = [],
   draw = (...elements) => {
     elements.forEach(element => element())
   },
   resizeCanvas = () => {
-    canvas.width = window.innerWidth *scaling
-    canvas.height = window.innerHeight *scaling
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
     draw(...elements)
   },
   drawings = [
     () => {
+      let rotation = 0,
+      squareSize = 50,
+      starting = 0, 
+      spacing = 1/3*squareSize, 
+      scaling = 4
+      
+      canvas.width = window.innerWidth *scaling
       canvas.height = window.innerWidth *scaling
-      const squareSize = 50
       
       ctx.strokeStyle = 'black'
       ctx.lineWidth = 0.5
-      let rotation = 0
-      let starting = 0
-      let spacing =1/3*squareSize
+      
       ctx.fillStyle = 'white'
       ctx.fillRect(0,0,canvas.width,canvas.height)
-      for(let x = starting; x < canvas.width; x+=spacing){
-        for(let y = starting; y < canvas.height; y+=spacing){
+      for(let x = 0; x < canvas.width; x+=spacing){
+        for(let y = 0; y < canvas.height; y+=spacing){
           ctx.save()
           ctx.beginPath()
           ctx.rotate((Math.PI / 24) + rotation)

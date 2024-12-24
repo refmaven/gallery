@@ -23,14 +23,15 @@ let canvas = document.querySelector('#c'),
       width = canvas.width,
       height = canvas.height,
       imageData = ctx.getImageData(0, 0, width, height),
-      data = imageData.data
-      
+      data = imageData.data,
+      redAndGreenSize = 13,
+      blueSize = 20 //redAndGreenSize * Math.sqrt(2)
       // red and green
       for (let y  = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
           let index = (y * width + x) * 4
-          data[index] = Math.sin(x/13) * 255
-          data[index + 1] = Math.cos(y / 13) * 255
+          data[index] = Math.sin(x/redAndGreenSize) * 255
+          data[index + 1] = Math.cos(y /redAndGreenSize) * 255
           data[index + 2] = 0
           data[index + 3] = 255
         }
@@ -40,7 +41,7 @@ let canvas = document.querySelector('#c'),
       for (let x  = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
           let index = (y * width + x) * 4
-          data[index + 2] = Math.cos((x+y)/20) * 255
+          data[index + 2] = Math.cos((x+y)/blueSize) * 255
         }
       }
       ctx.putImageData(imageData, 0, 0)
@@ -78,8 +79,6 @@ let canvas = document.querySelector('#c'),
 
 elements.push(drawings[0])
 resizeCanvas()
-window.addEventListener('resize', resizeCanvas)
-
 window.addEventListener('resize', resizeCanvas)
 
 canvas.addEventListener('click', () => {

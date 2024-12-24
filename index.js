@@ -2,6 +2,8 @@ let canvas = document.querySelector('#c'),
   ctx = canvas.getContext('2d'),
   elements = [],
   draw = (...elements) => {
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0,0,canvas.width,canvas.height)
     elements.forEach(element => element())
   },
   resizeCanvas = () => {
@@ -9,7 +11,42 @@ let canvas = document.querySelector('#c'),
     canvas.height = window.innerHeight
     draw(...elements)
   },
+  scaleCanvas = scale => {
+    canvas.width = window.innerWidth*scale
+    canvas.height = window.innerHeight*scale
+  },
   drawings = [
+    // day 2
+    () => {
+      scaleCanvas(2)
+      let blueLength = canvas.width/8,
+      width = canvas.width,
+      height = canvas.height,
+      imageData = ctx.getImageData(0, 0, width, height),
+      data = imageData.data
+      
+      // red and green
+      for (let y  = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          let index = (y * width + x) * 4
+          data[index] = Math.sin(x/13) * 255
+          data[index + 1] = Math.cos(y / 13) * 255
+          data[index + 2] = 0
+          data[index + 3] = 255
+        }
+      }
+      
+      // blue
+      for (let x  = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+          let index = (y * width + x) * 4
+          data[index + 2] = Math.cos((x+y)/20) * 255
+        }
+      }
+      ctx.putImageData(imageData, 0, 0)
+    },
+    
+    // day 1
     () => {
       let rotation = 0,
       squareSize = 50,
@@ -23,8 +60,6 @@ let canvas = document.querySelector('#c'),
       ctx.strokeStyle = 'black'
       ctx.lineWidth = 0.5
       
-      ctx.fillStyle = 'white'
-      ctx.fillRect(0,0,canvas.width,canvas.height)
       for(let x = 0; x < canvas.width; x+=spacing){
         for(let y = 0; y < canvas.height; y+=spacing){
           ctx.save()
